@@ -48,3 +48,8 @@ $ rails server
 gem uninstall sqlite3
 gem install sqlite3 -v "~> 1.3.6" --platform ruby 
 ```
+
+## 流れ
+
+- testを記述
+- 

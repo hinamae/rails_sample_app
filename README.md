@@ -49,7 +49,50 @@ gem uninstall sqlite3
 gem install sqlite3 -v "~> 1.3.6" --platform ruby 
 ```
 
+
+## bcrypt error時
+```
+gem uninstall bcrypt
+gem install bcrypt -v "3.1.12"  --platform ruby
+
+```
+
 ## 流れ
 
 - testを記述
-- 
+- routerに記述
+- コントローラーにモデルのアクションを作成
+
+## test
+
+```
+rails test
+rails test :integration
+rails test:models
+
+```
+
+## console
+
+```
+rails console
+#DBをロールバックして終了する
+rails console --sandbox
+```
+
+## DBの状態を確認
+
+```
+rails db:migrate:status
+```
+
+## error確認
+
+```
+# user作成
+user= User.new(name:"yamada",email:"yamada@example.com",password:"1234")
+# 正当性の確認
+user.valid?
+# エラーメッセージの詳細確認
+user.errors.full_messages
+```

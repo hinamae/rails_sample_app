@@ -86,6 +86,17 @@ rails console --sandbox
 rails db:migrate:status
 ```
 
+
+## DBの状態をreset
+
+```
+rails db:migrate:reset
+```
+
+db:drop:_unsafe
+db:migrate
+
+
 ## error確認
 
 ```
@@ -95,4 +106,54 @@ user= User.new(name:"yamada",email:"yamada@example.com",password:"1234")
 user.valid?
 # エラーメッセージの詳細確認
 user.errors.full_messages
+
+## DBにユーザ登録、変更
+
+```cmd
+#ユーザの属性変更(1こ)
+ user.update_attribute(:email, "example@railstutorial.org")  
 ```
+
+## byebugのエラー対応
+
+gemfile、
+ gem 'byebug', '~> 9.0', '>= 9.0.6', platform: [:mri, :mingw, :x64_mingw]
+ に書き換えて、
+bundle updateした。
+
+debuggerメソッド使うと、rails serverしたときに、byebugプロンプトが表示される。
+デバック時に使用する。
+
+## Gravatars
+
+https://en.gravatar.com/emails
+
+名前と画像を紐づけしてくれる外部サイト
+
+
+## ruby文法
+
+- シンボル
+params[:user]
+
+## 使用されているオブジェクト
+
+- model
+単数形
+user
+
+
+
+- contoroller
+複数形
+users
+static_pages
+
+- action
+    - コントローラーに記述されるメソッド
+new
+create
+
+- partial
+renderメソッドを使用し、繰り返しを簡略化する。
+<%= render %>の形で呼び出すことができる

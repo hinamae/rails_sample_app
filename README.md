@@ -141,19 +141,29 @@ params[:user]
 - model
 単数形
 user
-
+session
 
 
 - contoroller
 複数形
 users
 static_pages
+sessions
 
 - action
     - コントローラーに記述されるメソッド
-new
-create
+new＝ログインページを表示
+create＝ログインを完了する
+destroy=ログアウトを完了する
 
 - partial
 renderメソッドを使用し、繰り返しを簡略化する。
 <%= render %>の形で呼び出すことができる
+
+## ルーター確認
+
+```
+rails routes
+```
+
+アプリケーションで使用できる全アクションもこの出力から確認することができる

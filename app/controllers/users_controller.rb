@@ -13,6 +13,9 @@ class UsersController < ApplicationController
     # Web経由で外部ユーザにさらされていると、curlなどでWebリクエストに危険なコードを紛れ込ませることをされてしまう
     @user = User.new(user_params)
     if @user.save
+        #ユーザ登録中にログインを済ませておく
+        log_in @user
+        #新規アカウント作成後に"Welcome to Twitter modoki!!"を表示
         flash[:success]="Welcome to Twitter modoki!!"
         redirect_to @user
     else

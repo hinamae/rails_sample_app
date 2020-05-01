@@ -4,24 +4,41 @@ module SessionsHelper
     def log_in(user)
         session[:user_id] = user.id
     end
-    #現在ログイン中のユーザがいる場合ユーザオブジェクトを返す（そうでない場合nilを返す）
+    
+    def remember(user)
+        user.remember
+        cookies.permanent.signed[:user_id]=user.id
+        cookies.permanent[:remember_token]=user.remember_token
+    end
     def current_user
-        # if session[:user_id]
-        #     User.find_by(id: session[:user_id])
-        # else
-        #     @current_user
-        # end
-        #この上5行の短縮系が、下一行
+        #ユーザIDにユーザIDのセッションを代入した場合に、ユーザIDのセッションが存在すれば真
+        if (user_id = session[:user_id])
+        #現在ログイン中のユーザがいる場合ユーザオブジェクトを返す（そうでない場合nilを返す）           
+            @current_user ||=User.find_by(id: user_id)
+        #cookies[:user_id]からユーザを取り出して、対応する永続セッションにログインする必要がある        
+        elsif (user_id = cookies.signed[:user_id])
+            user=User.find_by(id: user_id)
+            if user && user.authenticated?(cookies[:remember_token])
+                log_in user
+                @current_user = user
+            end
+        end
 
-        @current_user ||= User.find_by(id: session[:user_id])
     end
 
     #ユーザがログインしていればtrue、その他ならfalseを返す
     def logged_in?
         !current_user.nil?
     end
+    
+    def forget(user)
+        user.forget
+        cookies.delete(:user_id)
+        cookies.delete(:remember_token)
+    end
 
     def log_out
+        forget(current_user)
         session.delete(:user_id)
         @current_user = nil
     end

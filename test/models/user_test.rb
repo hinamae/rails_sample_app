@@ -78,4 +78,9 @@ class UserTest < ActiveSupport::TestCase
   @user.password=@user.password_confirmation=" "*5
   assert_not @user.valid?
   end
+  #BCrypt::Passeord.new(nil)が発生しないようにする
+  #nilダイジェストが返されて誤ったログインセッションを保たないようにする
+  test "authenticated? should return false for a user with nil digest" do
+    assert_not @user.authenticated?('')
+  end
 end

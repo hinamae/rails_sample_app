@@ -12,7 +12,8 @@ class SessionsController < ApplicationController
       #[remember me]のチェックボックスの結果を送信する
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
 
-      redirect_to @user
+      #フレンドリーフォーワーディングを備えた
+      redirect_back_or @user
     else
       #エラーメッセージを作成する 
     flash.now[:danger] = 'Invalid email/password combination'

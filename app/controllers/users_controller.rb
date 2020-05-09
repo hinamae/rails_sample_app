@@ -8,11 +8,12 @@ class UsersController < ApplicationController
   
   def index
     #ページネートする(デフォルトは30。30ごとにページを分けて全ユーザーを表示する)
-    @users = User.paginate(page: params[:page])
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   def show
     @user = User.find(params[:id])
+    redirect_to root_url and return unless @user.activated?
   end
 
   def new
@@ -24,11 +25,15 @@ class UsersController < ApplicationController
     # Web経由で外部ユーザにさらされていると、curlなどでWebリクエストに危険なコードを紛れ込ませることをされてしまう
     @user = User.new(user_params)
     if @user.save
-        #ユーザ登録中にログインを済ませておく
-        log_in @user
-        #新規アカウント作成後に"Welcome to Twitter modoki!!"を表示
-        flash[:success]="Welcome to Twitter modoki!!"
-        redirect_to @user
+      #ユーザモデルオブジェクトからメールを送信する
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account"
+      redirect_to root_url
+        # #ユーザ登録中にログインを済ませておく
+        # log_in @user
+        # #新規アカウント作成後に"Welcome to Twitter modoki!!"を表示
+        # flash[:success]="Welcome to Twitter modoki!!"
+        # redirect_to @user
     else
       render 'new'
     end
@@ -82,4 +87,6 @@ class UsersController < ApplicationController
     def admin_user
       redirect_to(root_url) unless current_user.admin?
     end
+
+
 end

@@ -81,6 +81,6 @@ class UserTest < ActiveSupport::TestCase
   #BCrypt::Passeord.new(nil)が発生しないようにする
   #nilダイジェストが返されて誤ったログインセッションを保たないようにする
   test "authenticated? should return false for a user with nil digest" do
-    assert_not @user.authenticated?('')
+    assert_not @user.authenticated?(:remember,'')
   end
 end

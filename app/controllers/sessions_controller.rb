@@ -16,8 +16,8 @@ class SessionsController < ApplicationController
         #フレンドリーフォーワーディングを備えた
         redirect_back_or user
       else
-        message = "Account not activated"
-        message +="Check yout email for the activation link"
+        message = "Account not activated "
+        message +="Check your email for the activation link"
         flash[:warning] = message
         redirect_to root_url
       end

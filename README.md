@@ -173,3 +173,65 @@ rails routes
 ```
 
 アプリケーションで使用できる全アクションもこの出力から確認することができる
+
+##　dbのデータ系
+
+
+### テーブル作成しなおしたい場合
+
+```
+#widnowsだとなぜか以下が通らない
+rails db:drop
+rails db:reset
+
+```
+
+かわりに、
+
+エクスプローラーから
+C:\Users\HinaMaeyama\Documents\practice\rails\sample_app\sample_app\db
+の
+development.sqlite3
+test.sqlite3
+を削除する。
+その後、
+```
+#データベースのテーブルを作成
+rails db:create
+```
+
+```
+#データベースにカラムを追加
+rails db:migrate
+
+```
+
+すればよい。
+
+### サンプルデータを挿入したい場合
+
+```
+#てきとうなサンプルユーザを登録
+rails db:seed
+```
+
+## ユーザのアクティベーション
+
+(http://localhost:3000/rails/mailers/user_mailer/account_activation)[http://localhost:3000/rails/mailers/user_mailer/account_activation]
+
+本番環境でメールを送らずとも
+このurlからアクティベーションができる
+
+またメールのプレビューも表示できる
+
+## パスワードのリセットの確定
+
+(http://localhost:3000/rails/mailers/user_mailer/password_reset)[http://localhost:3000/rails/mailers/user_mailer/password_reset]
+
+本番環境でメールを送らずとも
+このurlからパスワードのリセットの確定ができる
+
+またメールのプレビューも表示できる
+
+## サーバを再起動しないと反映されなかった
+
